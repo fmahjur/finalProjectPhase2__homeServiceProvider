@@ -1,6 +1,6 @@
-package ir.maktab.finalprojectphase2.data.model;
+package ir.maktab.HomeServiceProvider.data.model;
 
-import ir.maktab.HomeServiceProvider.model.enums.AccountType;
+import ir.maktab.HomeServiceProvider.data.enums.AccountType;
 
 public class AccountFactory {
     public Account getAccount(AccountType accountType) {
