@@ -1,6 +1,6 @@
-package ir.maktab.finalprojectphase2.data.model;
+package ir.maktab.HomeServiceProvider.data.model;
 
-import ir.maktab.HomeServiceProvider.model.enums.City;
+import ir.maktab.HomeServiceProvider.data.enums.City;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
