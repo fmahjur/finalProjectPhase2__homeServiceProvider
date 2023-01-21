@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 public class Customer extends Account {
     @OneToMany(mappedBy = "customer")
-    List<Orders> orders;
+    List<Order> orders;
 
     @Column(columnDefinition = "boolean default false")
     boolean isDeleted;
