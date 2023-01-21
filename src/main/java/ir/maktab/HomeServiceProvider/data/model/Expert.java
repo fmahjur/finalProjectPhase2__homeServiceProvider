@@ -1,6 +1,6 @@
-package ir.maktab.finalprojectphase2.data.model;
+package ir.maktab.HomeServiceProvider.data.model;
 
-import ir.maktab.HomeServiceProvider.model.enums.ExpertStatus;
+import ir.maktab.HomeServiceProvider.data.enums.ExpertStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
