@@ -1,4 +1,4 @@
-package ir.maktab.finalprojectphase2.data.model;
+package ir.maktab.HomeServiceProvider.data.model;
 
 import jakarta.persistence.Entity;
 import lombok.*;
