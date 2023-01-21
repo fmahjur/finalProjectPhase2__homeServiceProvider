@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/baseService")
+@RequestMapping("/base-service")
 @RequiredArgsConstructor
 public class BaseServiceController {
 }
