@@ -1,6 +1,6 @@
-package ir.maktab.finalprojectphase2.data.model;
+package ir.maktab.HomeServiceProvider.data.model;
 
-import ir.maktab.HomeServiceProvider.model.enums.OrderStatus;
+import ir.maktab.HomeServiceProvider.data.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,8 @@ import java.util.Set;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-public class Orders extends BaseEntity {
+@Table(name = "orders")
+public class Order extends BaseEntity {
     String orderNumber;
     @ManyToOne
     Customer customer;
@@ -25,7 +26,7 @@ public class Orders extends BaseEntity {
     @ManyToOne
     SubService subService;
 
-    @OneToMany(mappedBy = "orders")
+    @OneToMany(mappedBy = "order")
     Set<Offer> offers;
 
     @Column(nullable = false)
@@ -55,7 +56,7 @@ public class Orders extends BaseEntity {
     @OneToOne
     Address address;
 
-    public Orders() {
+    public Order() {
         this.orderStatus = OrderStatus.WATING_FOR_EXPERTS_OFFER;
     }
 }
