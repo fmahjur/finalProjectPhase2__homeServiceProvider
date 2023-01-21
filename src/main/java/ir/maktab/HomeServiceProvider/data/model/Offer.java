@@ -18,7 +18,7 @@ public class Offer extends BaseEntity {
     Expert expert;
 
     @ManyToOne
-    Orders orders;
+    Order order;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
