@@ -4,9 +4,6 @@ import ir.maktab.HomeServiceProvider.data.model.Expert;
 import ir.maktab.HomeServiceProvider.data.model.SubService;
 import ir.maktab.HomeServiceProvider.data.repository.ExpertRepository;
 import ir.maktab.HomeServiceProvider.exception.ValidationException;
-import ir.maktab.HomeServiceProvider.model.dao.ExpertRepository;
-import ir.maktab.HomeServiceProvider.model.entity.Expert;
-import ir.maktab.HomeServiceProvider.model.entity.SubService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
