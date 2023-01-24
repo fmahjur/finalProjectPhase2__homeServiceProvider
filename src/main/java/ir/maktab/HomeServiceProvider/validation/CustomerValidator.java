@@ -11,7 +11,7 @@ public class CustomerValidator {
     private static CustomerRepository customerRepository;
 
     public static void isExistCustomer(String email) throws ValidationException {
-        if (customerRepository.isExist(email))
+        if (customerRepository.findByEmailAddress(email) == null)
             throw new ValidationException("this Email is already Exist!");
     }
 }
