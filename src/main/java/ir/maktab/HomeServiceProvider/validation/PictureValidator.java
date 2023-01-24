@@ -5,11 +5,11 @@ import ir.maktab.HomeServiceProvider.exception.ValidationException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PictureValidtior {
+public class PictureValidator {
     private static final String IMAGE_FILE = "([^\\s]+(\\.(?i)(jpe?g))$)";
     private static final Pattern pattern = Pattern.compile(IMAGE_FILE);
 
-    public static void isValidImagefile(String filePath) throws ValidationException {
+    public static void isValidImageFile(String filePath) throws ValidationException {
         Matcher matcher = pattern.matcher(filePath);
         if (!matcher.matches())
             throw new ValidationException("invalid image!!! your image file must be jpg!");
