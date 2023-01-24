@@ -1,10 +1,14 @@
 package ir.maktab.HomeServiceProvider.validation;
 
+import ir.maktab.HomeServiceProvider.data.repository.SubServiceRepository;
 import ir.maktab.HomeServiceProvider.exception.ValidationException;
-import ir.maktab.HomeServiceProvider.model.dao.SubServiceRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
+@RequiredArgsConstructor
 public class SubServiceValidator {
-    static SubServiceRepository subServiceRepository = SubServiceRepository.getInstance();
+    private static SubServiceRepository subServiceRepository;
 
     public static void isExistSubService(String service) throws ValidationException {
         if (subServiceRepository.isExist(service))
