@@ -11,12 +11,12 @@ public class BaseServiceValidator {
     private static BaseServiceRepository baseServiceRepository;
 
     public static void isExistService(String serviceName) throws ValidationException {
-        if (baseServiceRepository.isExist(serviceName))
+        if (baseServiceRepository.findByName(serviceName) != null)
             throw new ValidationException("this Service is already Exist!");
     }
 
-    public static void isNotExistService(String service) throws ValidationException {
-        if (!baseServiceRepository.isExist(service))
+    public static void isNotExistService(String serviceName) throws ValidationException {
+        if (baseServiceRepository.findByName(serviceName) == null)
             throw new ValidationException("this Service is not Exist!");
     }
 }
