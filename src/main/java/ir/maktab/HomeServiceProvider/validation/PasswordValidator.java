@@ -16,5 +16,10 @@ public class PasswordValidator {
         if (!matcher.matches())
             throw new ValidationException("invalid password!");
     }
-
+    public static void isValidNewPassword(String oldPassword, String newPassword, String confirmNewPassword) throws ValidationException {
+        if(oldPassword.equals(newPassword))
+            throw new ValidationException("oldPassword and newPassword can not be same!");
+        else if (!newPassword.equals(confirmNewPassword))
+            throw new ValidationException("newPassword and confirmNewPassword must be same!");
+    }
 }
