@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 public class SubServiceValidator {
     private static SubServiceRepository subServiceRepository;
 
-    public static void isExistSubService(String service) throws ValidationException {
-        if (subServiceRepository.isExist(service))
+    public static void isExistSubService(String subServiceName) throws ValidationException {
+        if (subServiceRepository.findByName(subServiceName) != null)
             throw new ValidationException("this SubService is already Exist!");
     }
 }
