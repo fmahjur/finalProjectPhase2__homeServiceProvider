@@ -8,7 +8,7 @@ import java.util.List;
 public interface ExpertService extends MainService<Expert> {
     void login(Expert expert);
 
-    void changePassword(Expert expert, String newPassword);
+    void changePassword(Expert expert, String newPassword, String confirmNewPassword);
 
     List<Expert> selectExpertByExpertStatus(ExpertStatus expertStatus);
 }
