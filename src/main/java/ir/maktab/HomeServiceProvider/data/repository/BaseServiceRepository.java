@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BaseServiceRepository extends JpaRepository<BaseService, Long> {
+    BaseService findByName(String baseServiceName);
 }
