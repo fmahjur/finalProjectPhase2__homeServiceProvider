@@ -34,24 +34,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void delete(Customer customer) {
         customer.setDeleted(true);
-        update(customer);
+        customerRepository.save(customer);
     }
 
     @Override
     public void update(Customer customer) {
-        Customer existingCustomer = customerRepository.findById(customer.getId()).orElse(null);
-        existingCustomer.setFirstname(customer.getFirstname());
-        existingCustomer.setLastname(customer.getLastname());
-        existingCustomer.setEmailAddress(customer.getEmailAddress());
-        existingCustomer.setUsername(customer.getUsername());
-        existingCustomer.setPassword(customer.getPassword());
-        existingCustomer.setCredit(customer.getCredit());
-        existingCustomer.setRegisteryDate(customer.getRegisteryDate());
-        existingCustomer.setOrders(customer.getOrders());
-        existingCustomer.setDeleted(customer.isDeleted());
-
-        //instead of: customerRepository.save(customer);
-        add(customer);
+        customerRepository.save(customer);
     }
 
     @Override
@@ -69,12 +57,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void changePassword(Customer customer, String newPassword, String confirmNewPassword) {
         PasswordValidator.isValidNewPassword(customer.getPassword(), newPassword, confirmNewPassword);
-
-        // we don't need this line: PasswordValidator.isValid(newPassword);
-        //because we check password before save or update
-
+        PasswordValidator.isValid(newPassword);
         customer.setPassword(newPassword);
-        update(customer);
+        customerRepository.save(customer);
     }
 
     @Override
