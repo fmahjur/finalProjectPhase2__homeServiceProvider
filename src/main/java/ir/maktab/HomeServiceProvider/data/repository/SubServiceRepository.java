@@ -1,4 +1,4 @@
-package ir.maktab.HomeServiceProvider.data.repository;
+package repository;
 
 import ir.maktab.HomeServiceProvider.data.model.BaseService;
 import ir.maktab.HomeServiceProvider.data.model.SubService;

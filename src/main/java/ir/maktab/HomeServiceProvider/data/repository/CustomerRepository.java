@@ -1,4 +1,4 @@
-package ir.maktab.HomeServiceProvider.data.repository;
+package repository;
 
 import ir.maktab.HomeServiceProvider.data.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
