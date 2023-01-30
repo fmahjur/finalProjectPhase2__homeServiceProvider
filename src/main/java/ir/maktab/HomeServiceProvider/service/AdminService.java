@@ -5,9 +5,9 @@ import ir.maktab.HomeServiceProvider.data.model.Expert;
 import ir.maktab.HomeServiceProvider.data.model.SubService;
 
 public interface AdminService {
-    void addNewService(BaseService service);
+    BaseService addNewService(BaseService service);
 
-    void addNewSubService(SubService subService);
+    SubService addNewSubService(SubService subService);
 
     void confirmExpert(Expert expert);
 
