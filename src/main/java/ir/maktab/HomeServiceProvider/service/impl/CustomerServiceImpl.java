@@ -5,6 +5,7 @@ import ir.maktab.HomeServiceProvider.data.model.Customer;
 import ir.maktab.HomeServiceProvider.data.model.Order;
 import ir.maktab.HomeServiceProvider.data.repository.CustomerRepository;
 import ir.maktab.HomeServiceProvider.exception.IncorrectInformationException;
+import ir.maktab.HomeServiceProvider.exception.NotFoundException;
 import ir.maktab.HomeServiceProvider.service.CustomerService;
 import ir.maktab.HomeServiceProvider.validation.CustomerValidator;
 import ir.maktab.HomeServiceProvider.validation.EmailValidator;
@@ -24,11 +25,11 @@ public class CustomerServiceImpl implements CustomerService {
     private final SubServiceServiceImpl subServiceService;
 
     @Override
-    public void add(Customer customer) {
+    public Customer add(Customer customer) {
         EmailValidator.isValid(customer.getEmailAddress());
         CustomerValidator.isExistCustomer(customer.getEmailAddress());
         PasswordValidator.isValid(customer.getPassword());
-        customerRepository.save(customer);
+        return customerRepository.save(customer);
     }
 
     @Override
@@ -38,8 +39,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void update(Customer customer) {
-        customerRepository.save(customer);
+    public Customer update(Customer customer) {
+        return customerRepository.save(customer);
     }
 
     @Override
@@ -49,7 +50,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void login(Customer customer) {
-        Customer customerByUsername = customerRepository.findByUsername(customer.getUsername());
+        Customer customerByUsername = customerRepository.findByUsername(customer.getUsername()).orElseThrow(
+                ()-> new NotFoundException("Not Found your username!")
+        );
         if (!Objects.equals(customer.getPassword(), customerByUsername.getPassword()))
             throw new IncorrectInformationException("Username or Password is Incorrect!");
     }
