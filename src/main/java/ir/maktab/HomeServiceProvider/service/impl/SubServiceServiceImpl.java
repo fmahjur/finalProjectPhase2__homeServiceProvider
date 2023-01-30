@@ -17,10 +17,10 @@ public class SubServiceServiceImpl implements SubServiceService {
     private final SubServiceRepository subServiceRepository;
 
     @Override
-    public void add(SubService subService) {
+    public SubService add(SubService subService) {
         BaseServiceValidator.isNotExistService(subService.getBaseService().getName());
         SubServiceValidator.isExistSubService(subService.getName());
-        subServiceRepository.save(subService);
+        return subServiceRepository.save(subService);
     }
 
     @Override
@@ -30,8 +30,8 @@ public class SubServiceServiceImpl implements SubServiceService {
     }
 
     @Override
-    public void update(SubService subService) {
-        subServiceRepository.save(subService);
+    public SubService update(SubService subService) {
+        return subServiceRepository.save(subService);
     }
 
     @Override
