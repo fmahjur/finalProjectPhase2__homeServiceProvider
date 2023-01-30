@@ -6,25 +6,30 @@ import ir.maktab.HomeServiceProvider.data.model.Expert;
 import ir.maktab.HomeServiceProvider.data.model.SubService;
 import ir.maktab.HomeServiceProvider.service.AdminService;
 import ir.maktab.HomeServiceProvider.validation.ExpertValidator;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
     private final BaseServiceServiceImpl baseServiceService;
     private final SubServiceServiceImpl subServiceService;
     private final ExpertServiceImpl expertService;
     private final CustomerServiceImpl customerService;
 
-    @Override
-    public void addNewService(BaseService baseService) {
-        baseServiceService.add(baseService);
+    public AdminServiceImpl(BaseServiceServiceImpl baseServiceService, SubServiceServiceImpl subServiceService, ExpertServiceImpl expertService, CustomerServiceImpl customerService) {
+        this.baseServiceService = baseServiceService;
+        this.subServiceService = subServiceService;
+        this.expertService = expertService;
+        this.customerService = customerService;
     }
 
     @Override
-    public void addNewSubService(SubService subService) {
-        subServiceService.add(subService);
+    public BaseService addNewService(BaseService baseService) {
+        return baseServiceService.add(baseService);
+    }
+
+    @Override
+    public SubService addNewSubService(SubService subService) {
+        return subServiceService.add(subService);
     }
 
     @Override
@@ -35,9 +40,10 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void allocationServiceToExpert(Expert expert, SubService subService) {
-        ExpertValidator.isExpertConfirmed(expert.getUsername());
+        //ExpertValidator.isExpertConfirmed(expert.getUsername());
+
         expert.setSubServices(subService);
-        expertService.update(expert);
+        expertService.updateExpertSubService(expert);
     }
 
     @Override
