@@ -14,8 +14,8 @@ public class CommentServiceImp implements CommentService {
     private final CommentRepository commentRepository;
 
     @Override
-    public void add(Comment comment) {
-        commentRepository.save(comment);
+    public Comment add(Comment comment) {
+        return commentRepository.save(comment);
     }
 
     @Override
@@ -25,13 +25,13 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
-    public void update(Comment comment) {
+    public Comment update(Comment comment) {
         Comment existingComment = commentRepository.findById(comment.getId()).orElse(null);
         existingComment.setComment(comment.getComment());
         existingComment.setScore(comment.getScore());
         existingComment.setExpert(comment.getExpert());
         existingComment.setDeleted(comment.isDeleted());
-        commentRepository.save(existingComment);
+        return commentRepository.save(existingComment);
     }
 
     @Override
