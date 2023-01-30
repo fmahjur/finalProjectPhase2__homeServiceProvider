@@ -15,9 +15,9 @@ public class BaseServiceServiceImpl implements BaseServiceService {
     private final BaseServiceRepository baseServiceRepository;
 
     @Override
-    public void add(BaseService baseService) {
+    public BaseService add(BaseService baseService) {
         BaseServiceValidator.isExistService(baseService.getName());
-        baseServiceRepository.save(baseService);
+        return baseServiceRepository.save(baseService);
     }
 
     @Override
@@ -27,12 +27,12 @@ public class BaseServiceServiceImpl implements BaseServiceService {
     }
 
     @Override
-    public void update(BaseService baseService) {
+    public BaseService update(BaseService baseService) {
         BaseService existingBaseService = baseServiceRepository.findById(baseService.getId()).orElse(null);
         existingBaseService.setName(baseService.getName());
         existingBaseService.setDeleted(baseService.isDeleted());
         existingBaseService.setSubServiceList(baseService.getSubServiceList());
-        baseServiceRepository.save(existingBaseService);
+        return baseServiceRepository.save(existingBaseService);
     }
 
     @Override
