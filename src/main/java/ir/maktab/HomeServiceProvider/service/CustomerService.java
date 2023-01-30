@@ -2,6 +2,7 @@ package ir.maktab.HomeServiceProvider.service;
 
 import ir.maktab.HomeServiceProvider.data.model.BaseService;
 import ir.maktab.HomeServiceProvider.data.model.Customer;
+import ir.maktab.HomeServiceProvider.data.model.Offer;
 import ir.maktab.HomeServiceProvider.data.model.Order;
 
 public interface CustomerService extends MainService<Customer> {
@@ -14,6 +15,12 @@ public interface CustomerService extends MainService<Customer> {
     void deleteOrder(Order order);
 
     void editOrder(Order order);
+
+    void choseAnExpertForOrder(Order order, Offer offer);
+
+    void changeOrderStatusToStarted(Order order);
+
+    void changeOrderStatusToDone(Order order);
 
     void showAllCustomerOrders(Customer customer);
 
