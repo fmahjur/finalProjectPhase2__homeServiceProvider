@@ -12,4 +12,5 @@ public interface OrderService extends MainService<Order> {
     List<Order> selectAllCustomersOrders(Customer customer);
 
     Optional<Order> getOrderDetail(String orderNumber);
+    void showAllOfferForOrder(Order order);
 }
