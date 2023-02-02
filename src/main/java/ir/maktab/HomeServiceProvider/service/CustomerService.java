@@ -1,26 +1,25 @@
 package ir.maktab.HomeServiceProvider.service;
 
-import ir.maktab.HomeServiceProvider.data.model.BaseService;
-import ir.maktab.HomeServiceProvider.data.model.Customer;
-import ir.maktab.HomeServiceProvider.data.model.Offer;
-import ir.maktab.HomeServiceProvider.data.model.Order;
+import ir.maktab.HomeServiceProvider.data.model.*;
 
 public interface CustomerService extends MainService<Customer> {
     void login(Customer customer);
 
     void changePassword(Customer customer, String newPassword, String confirmNewPassword);
 
-    void addNewOrder(Order order);
+    void addNewOrder(Orders orders);
 
-    void deleteOrder(Order order);
+    void deleteOrder(Orders orders);
 
-    void editOrder(Order order);
+    void editOrder(Orders orders);
 
-    void choseAnExpertForOrder(Order order, Offer offer);
+    void choseAnExpertForOrder(Orders orders, Offer offer);
 
-    void changeOrderStatusToStarted(Order order);
+    void changeOrderStatusToStarted(Orders orders);
 
-    void changeOrderStatusToDone(Order order);
+    void changeOrderStatusToDone(Orders orders);
+
+    void addNewComment(Comment comment, Expert expert);
 
     void showAllCustomerOrders(Customer customer);
 

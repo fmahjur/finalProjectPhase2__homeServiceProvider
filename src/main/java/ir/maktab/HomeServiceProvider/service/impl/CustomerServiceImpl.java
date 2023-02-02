@@ -2,10 +2,7 @@ package ir.maktab.HomeServiceProvider.service.impl;
 
 import ir.maktab.HomeServiceProvider.data.enums.OfferStatus;
 import ir.maktab.HomeServiceProvider.data.enums.OrderStatus;
-import ir.maktab.HomeServiceProvider.data.model.BaseService;
-import ir.maktab.HomeServiceProvider.data.model.Customer;
-import ir.maktab.HomeServiceProvider.data.model.Offer;
-import ir.maktab.HomeServiceProvider.data.model.Order;
+import ir.maktab.HomeServiceProvider.data.model.*;
 import ir.maktab.HomeServiceProvider.data.repository.CustomerRepository;
 import ir.maktab.HomeServiceProvider.exception.IncorrectInformationException;
 import ir.maktab.HomeServiceProvider.exception.NotFoundException;
@@ -26,6 +23,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final OrderServiceImpl orderService;
     private final OfferServiceImpl offerService;
+    private final ExpertServiceImpl expertService;
     private final BaseServiceServiceImpl baseServiceService;
     private final SubServiceServiceImpl subServiceService;
 
@@ -38,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void delete(Customer customer) {
+    public void remove(Customer customer) {
         customer.setDeleted(true);
         customerRepository.save(customer);
     }
@@ -51,6 +49,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> selectAll() {
         return customerRepository.findAll();
+    }
+
+    @Override
+    public List<Customer> selectAllAvailableService() {
+        return customerRepository.findAllByDeletedIs(false);
     }
 
     @Override
@@ -71,44 +74,49 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void addNewOrder(Order order) {
-        orderService.add(order);
+    public void addNewOrder(Orders orders) {
+        orderService.add(orders);
     }
 
     @Override
-    public void deleteOrder(Order order) {
-        orderService.delete(order);
+    public void deleteOrder(Orders orders) {
+        orderService.remove(orders);
     }
 
     @Override
-    public void editOrder(Order order) {
-        orderService.update(order);
+    public void editOrder(Orders orders) {
+        orderService.update(orders);
     }
 
     @Override
-    public void choseAnExpertForOrder(Order order, Offer offer) {
-        for (Offer offer1 : order.getOffers()) {
+    public void choseAnExpertForOrder(Orders orders, Offer offer) {
+        for (Offer offer1 : orders.getOffers()) {
             if (Objects.equals(offer1, offer)) {
                 offer1.setOfferStatus(OfferStatus.ACCEPTED);
-                order.setWorkStartDate(offer1.getProposedStartDate());
-            }
-            else
+                orders.setWorkStartDate(offer1.getProposedStartDate());
+            } else
                 offer1.setOfferStatus(OfferStatus.REJECTED);
             offerService.update(offer1);
         }
-        order.setOrderStatus(OrderStatus.WAITING_FOR_EXPERT_TO_COME);
-        orderService.update(order);
+        orders.setOrderStatus(OrderStatus.WAITING_FOR_EXPERT_TO_COME);
+        orderService.update(orders);
+    }
+
+    @Override
+    public void changeOrderStatusToStarted(Orders orders) {
+        OrderValidator.isValidOrderStartDate(orders.getWorkStartDate());
+        orders.setOrderStatus(OrderStatus.STARTED);
+        orderService.update(orders);
+    }
+
+    @Override
+    public void changeOrderStatusToDone(Orders orders) {
+        orders.setOrderStatus(OrderStatus.DONE);
+        orderService.update(orders);
     }
     @Override
-    public void changeOrderStatusToStarted(Order order){
-        OrderValidator.isValidOrderStartDate(order.getWorkStartDate());
-        order.setOrderStatus(OrderStatus.STARTED);
-        orderService.update(order);
-    }
-    @Override
-    public void changeOrderStatusToDone(Order order){
-        order.setOrderStatus(OrderStatus.DONE);
-        orderService.update(order);
+    public void addNewComment(Comment comment, Expert expert){
+        expertService.receivedNewComment(comment, expert);
     }
 
     @Override
