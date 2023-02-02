@@ -1,9 +1,10 @@
 package ir.maktab.HomeServiceProvider.service.impl;
 
 import ir.maktab.HomeServiceProvider.data.enums.ExpertStatus;
+import ir.maktab.HomeServiceProvider.data.model.Comment;
 import ir.maktab.HomeServiceProvider.data.model.Expert;
 import ir.maktab.HomeServiceProvider.data.model.Offer;
-import ir.maktab.HomeServiceProvider.data.model.Order;
+import ir.maktab.HomeServiceProvider.data.model.Orders;
 import ir.maktab.HomeServiceProvider.data.repository.ExpertRepository;
 import ir.maktab.HomeServiceProvider.exception.IncorrectInformationException;
 import ir.maktab.HomeServiceProvider.exception.ResourceNotFoundException;
@@ -23,13 +24,14 @@ import java.util.Optional;
 public class ExpertServiceImpl implements ExpertService {
     private final ExpertRepository expertRepository;
     private final OrderServiceImpl orderService;
+    private final CommentServiceImp commentService;
 
     @Override
     public Expert add(Expert expert) {
         EmailValidator.isValid(expert.getEmailAddress());
         //ExpertValidator.isExistExpert(expert.getEmailAddress());
         Optional<Expert> savedExpert = expertRepository.findByEmailAddress(expert.getEmailAddress());
-        if(savedExpert.isPresent()){
+        if (savedExpert.isPresent()) {
             throw new ResourceNotFoundException("Employee already exist with given email:" + expert.getEmailAddress());
         }
         PasswordValidator.isValid(expert.getPassword());
@@ -38,7 +40,7 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
     @Override
-    public void delete(Expert expert) {
+    public void remove(Expert expert) {
         expert.setDeleted(true);
         expertRepository.save(expert);
     }
@@ -48,8 +50,17 @@ public class ExpertServiceImpl implements ExpertService {
         return expertRepository.save(expert);
     }
 
-    public void updateExpertSubService(Expert expert){
+    @Override
+    public void updateExpertSubService(Expert expert) {
         expertRepository.updateExpertSubService(expert.getSubServices(), expert.getUsername());
+    }
+
+    public void receivedNewComment(Comment comment, Expert expert) {
+        comment.setExpert(expert);
+        expert.getComments().add(comment);
+        expert.setRate();
+        commentService.add(comment);
+        expertRepository.save(expert);
     }
 
     @Override
@@ -58,9 +69,15 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
     @Override
+    public List<Expert> selectAllAvailableService() {
+        return expertRepository.findAllByDeletedIs(false);
+    }
+
+
+    @Override
     public void login(Expert expert) {
         Optional<Expert> expertByUsername = expertRepository.findByUsername(expert.getUsername());
-        if(expertByUsername.isPresent())
+        if (expertByUsername.isPresent())
             if (!Objects.equals(expert.getPassword(), expertByUsername.get().getPassword()))
                 throw new IncorrectInformationException("Username or Password is Incorrect!");
 
@@ -79,7 +96,7 @@ public class ExpertServiceImpl implements ExpertService {
         return expertRepository.findAllByExpertStatus(expertStatus);
     }
 
-    public void submitAnOffer(Offer offer, Order order){
-        orderService.receivedNewOffer(offer, order);
+    public void submitAnOffer(Offer offer, Orders orders) {
+        orderService.receivedNewOffer(offer, orders);
     }
 }
