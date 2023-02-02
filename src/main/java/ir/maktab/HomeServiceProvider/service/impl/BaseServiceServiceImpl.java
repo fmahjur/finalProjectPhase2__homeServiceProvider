@@ -21,22 +21,22 @@ public class BaseServiceServiceImpl implements BaseServiceService {
     }
 
     @Override
-    public void delete(BaseService baseService) {
+    public void remove(BaseService baseService) {
         baseService.setDeleted(true);
-        update(baseService);
+        baseServiceRepository.save(baseService);
     }
 
     @Override
     public BaseService update(BaseService baseService) {
-        BaseService existingBaseService = baseServiceRepository.findById(baseService.getId()).orElse(null);
-        existingBaseService.setName(baseService.getName());
-        existingBaseService.setDeleted(baseService.isDeleted());
-        existingBaseService.setSubServiceList(baseService.getSubServiceList());
-        return baseServiceRepository.save(existingBaseService);
+        return baseServiceRepository.save(baseService);
     }
 
     @Override
     public List<BaseService> selectAll() {
         return baseServiceRepository.findAll();
+    }
+    @Override
+    public List<BaseService> selectAllAvailableService(){
+        return baseServiceRepository.findAllByDeletedIs(false);
     }
 }

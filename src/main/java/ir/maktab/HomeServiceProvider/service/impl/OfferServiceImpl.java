@@ -2,7 +2,7 @@ package ir.maktab.HomeServiceProvider.service.impl;
 
 import ir.maktab.HomeServiceProvider.data.model.Expert;
 import ir.maktab.HomeServiceProvider.data.model.Offer;
-import ir.maktab.HomeServiceProvider.data.model.Order;
+import ir.maktab.HomeServiceProvider.data.model.Orders;
 import ir.maktab.HomeServiceProvider.data.repository.OfferRepository;
 import ir.maktab.HomeServiceProvider.service.OfferService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public void delete(Offer offer) {
+    public void remove(Offer offer) {
         offer.setDeleted(true);
         offerRepository.save(offer);
     }
@@ -39,8 +39,13 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public List<Offer> selectAllByOrder(Order order) {
-        List<Offer> allOfferForOrder = offerRepository.findAllByOrder(order);
+    public List<Offer> selectAllAvailableService() {
+        return offerRepository.findAllByDeletedIs(false);
+    }
+
+    @Override
+    public List<Offer> selectAllByOrder(Orders orders) {
+        List<Offer> allOfferForOrder = offerRepository.findAllByOrdersIs(orders);
         Collections.sort(allOfferForOrder, new Comparator() {
             public int compare(Object o1, Object o2) {
                 Double x1 = ((Offer) o1).getOfferPrice();

@@ -24,7 +24,7 @@ public class SubServiceServiceImpl implements SubServiceService {
     }
 
     @Override
-    public void delete(SubService subService) {
+    public void remove(SubService subService) {
         subService.setDeleted(true);
         subServiceRepository.save(subService);
     }
@@ -37,6 +37,11 @@ public class SubServiceServiceImpl implements SubServiceService {
     @Override
     public List<SubService> selectAll() {
         return subServiceRepository.findAll();
+    }
+
+    @Override
+    public List<SubService> selectAllAvailableService() {
+        return subServiceRepository.findAllByDeletedIs(false);
     }
 
     @Override

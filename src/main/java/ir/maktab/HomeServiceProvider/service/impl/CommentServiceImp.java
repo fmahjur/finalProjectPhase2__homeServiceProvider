@@ -19,23 +19,24 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
-    public void delete(Comment comment) {
+    public void remove(Comment comment) {
         comment.setDeleted(true);
         update(comment);
     }
 
     @Override
     public Comment update(Comment comment) {
-        Comment existingComment = commentRepository.findById(comment.getId()).orElse(null);
-        existingComment.setComment(comment.getComment());
-        existingComment.setScore(comment.getScore());
-        existingComment.setExpert(comment.getExpert());
-        existingComment.setDeleted(comment.isDeleted());
-        return commentRepository.save(existingComment);
+        comment.setDeleted(true);
+        return commentRepository.save(comment);
     }
 
     @Override
     public List<Comment> selectAll() {
         return commentRepository.findAll();
+    }
+
+    @Override
+    public List<Comment> selectAllAvailableService() {
+        return commentRepository.findAllByDeletedIs(false);
     }
 }

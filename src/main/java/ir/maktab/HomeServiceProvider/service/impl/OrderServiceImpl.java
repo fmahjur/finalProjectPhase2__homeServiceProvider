@@ -3,7 +3,7 @@ package ir.maktab.HomeServiceProvider.service.impl;
 import ir.maktab.HomeServiceProvider.data.enums.OrderStatus;
 import ir.maktab.HomeServiceProvider.data.model.Customer;
 import ir.maktab.HomeServiceProvider.data.model.Offer;
-import ir.maktab.HomeServiceProvider.data.model.Order;
+import ir.maktab.HomeServiceProvider.data.model.Orders;
 import ir.maktab.HomeServiceProvider.data.repository.OrderRepository;
 import ir.maktab.HomeServiceProvider.service.OrderService;
 import ir.maktab.HomeServiceProvider.validation.OfferValidator;
@@ -21,51 +21,56 @@ public class OrderServiceImpl implements OrderService {
     private final OfferServiceImpl offerService;
 
     @Override
-    public Order add(Order order) {
-        OrderValidator.isValidOrderStartDate(order.getWorkStartDate());
-        OrderValidator.isValidCustomerProposedPrice(order);
-        return orderRepository.save(order);
+    public Orders add(Orders orders) {
+        OrderValidator.isValidOrderStartDate(orders.getWorkStartDate());
+        OrderValidator.isValidCustomerProposedPrice(orders);
+        return orderRepository.save(orders);
     }
 
     @Override
-    public void delete(Order order) {
-        order.setDeleted(true);
-        orderRepository.save(order);
+    public void remove(Orders orders) {
+        orders.setDeleted(true);
+        orderRepository.save(orders);
     }
 
     @Override
-    public Order update(Order order) {
-        return orderRepository.save(order);
+    public Orders update(Orders orders) {
+        return orderRepository.save(orders);
     }
 
     @Override
-    public void receivedNewOffer(Offer offer, Order order) {
-        OrderValidator.checkOrderStatus(order);
+    public void receivedNewOffer(Offer offer, Orders orders) {
+        OrderValidator.checkOrderStatus(orders);
         OfferValidator.isValidExpertProposedPrice(offer);
         OfferValidator.hasDurationOfWork(offer);
-        offer.setOrder(order);
-        order.getOffers().add(offer);
-        order.setOrderStatus(OrderStatus.WAITING_FOR_CHOSE_EXPERT);
+        offer.setOrders(orders);
+        orders.getOffers().add(offer);
+        orders.setOrderStatus(OrderStatus.WAITING_FOR_CHOSE_EXPERT);
         offerService.add(offer);
-        orderRepository.save(order);
+        orderRepository.save(orders);
     }
 
     @Override
-    public List<Order> selectAll() {
+    public List<Orders> selectAll() {
         return orderRepository.findAll();
     }
 
     @Override
-    public List<Order> selectAllCustomersOrders(Customer customer) {
+    public List<Orders> selectAllAvailableService() {
+        return orderRepository.findAllByDeletedIs(false);
+    }
+
+    @Override
+    public List<Orders> selectAllCustomersOrders(Customer customer) {
         return orderRepository.findAllByCustomer(customer);
     }
 
     @Override
-    public Optional<Order> getOrderDetail(String orderNumber) {
+    public Optional<Orders> getOrderDetail(String orderNumber) {
         return orderRepository.findByOrderNumber(orderNumber);
     }
     @Override
-    public void showAllOfferForOrder(Order order) {
-        offerService.selectAllByOrder(order);
+    public void showAllOfferForOrder(Orders orders) {
+        offerService.selectAllByOrder(orders);
     }
 }
