@@ -1,15 +1,14 @@
 package ir.maktab.HomeServiceProvider.service.impl;
 
 import ir.maktab.HomeServiceProvider.data.enums.ExpertStatus;
-import ir.maktab.HomeServiceProvider.data.model.Comment;
-import ir.maktab.HomeServiceProvider.data.model.Expert;
-import ir.maktab.HomeServiceProvider.data.model.Offer;
-import ir.maktab.HomeServiceProvider.data.model.Orders;
+import ir.maktab.HomeServiceProvider.data.model.*;
 import ir.maktab.HomeServiceProvider.data.repository.ExpertRepository;
 import ir.maktab.HomeServiceProvider.exception.IncorrectInformationException;
+import ir.maktab.HomeServiceProvider.exception.NotFoundException;
 import ir.maktab.HomeServiceProvider.exception.ResourceNotFoundException;
 import ir.maktab.HomeServiceProvider.service.ExpertService;
 import ir.maktab.HomeServiceProvider.validation.EmailValidator;
+import ir.maktab.HomeServiceProvider.validation.ExpertValidator;
 import ir.maktab.HomeServiceProvider.validation.PasswordValidator;
 import ir.maktab.HomeServiceProvider.validation.PictureValidator;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +28,7 @@ public class ExpertServiceImpl implements ExpertService {
     @Override
     public Expert add(Expert expert) {
         EmailValidator.isValid(expert.getEmailAddress());
-        //ExpertValidator.isExistExpert(expert.getEmailAddress());
+        ExpertValidator.isExistExpert(expert.getEmailAddress());
         Optional<Expert> savedExpert = expertRepository.findByEmailAddress(expert.getEmailAddress());
         if (savedExpert.isPresent()) {
             throw new ResourceNotFoundException("Employee already exist with given email:" + expert.getEmailAddress());
@@ -51,8 +50,14 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
     @Override
-    public void updateExpertSubService(Expert expert) {
-        expertRepository.updateExpertSubService(expert.getSubServices(), expert.getUsername());
+    public Expert findById(Long id) {
+        return expertRepository.findById(id).orElseThrow(() -> new NotFoundException("not found"));
+    }
+
+    @Override
+    public void updateExpertSubService(SubService subService, Expert expert) {
+        expert.getSubServices().add(subService);
+        expertRepository.save(expert);
     }
 
     public void receivedNewComment(Comment comment, Expert expert) {
@@ -96,7 +101,15 @@ public class ExpertServiceImpl implements ExpertService {
         return expertRepository.findAllByExpertStatus(expertStatus);
     }
 
+    @Override
     public void submitAnOffer(Offer offer, Orders orders) {
         orderService.receivedNewOffer(offer, orders);
+    }
+
+    @Override
+    public byte[] getImage(Long id) {
+        Optional<Expert> getExpert = expertRepository.findById(id);
+        byte[] personalPhoto = getExpert.get().getPersonalPhoto();
+        return personalPhoto;
     }
 }
