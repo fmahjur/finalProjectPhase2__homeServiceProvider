@@ -1,7 +1,10 @@
 package ir.maktab.HomeServiceProvider.service.impl;
 
 import ir.maktab.HomeServiceProvider.data.enums.ExpertStatus;
-import ir.maktab.HomeServiceProvider.data.model.*;
+import ir.maktab.HomeServiceProvider.data.model.Comment;
+import ir.maktab.HomeServiceProvider.data.model.Credit;
+import ir.maktab.HomeServiceProvider.data.model.Expert;
+import ir.maktab.HomeServiceProvider.data.model.SubService;
 import ir.maktab.HomeServiceProvider.data.repository.ExpertRepository;
 import ir.maktab.HomeServiceProvider.exception.ValidationException;
 import org.junit.jupiter.api.*;
@@ -11,6 +14,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 
 import javax.sql.DataSource;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -125,5 +131,12 @@ class ExpertServiceImplTest {
 
     @Test
     void testSubmitAnOffer() {
+    }
+
+    @Test
+    void testGetPersonalPhoto() throws IOException {
+        byte[] personalPhoto = expertService.getImage(1L);
+        FileOutputStream image=new FileOutputStream("C:\\Users\\paage\\OneDrive\\Documents\\reihaneh\\2222.jpgg");
+        image.write(personalPhoto);
     }
 }
