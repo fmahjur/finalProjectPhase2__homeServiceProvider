@@ -3,17 +3,13 @@ package ir.maktab.HomeServiceProvider.service.impl;
 import ir.maktab.HomeServiceProvider.data.model.Comment;
 import ir.maktab.HomeServiceProvider.data.model.Credit;
 import ir.maktab.HomeServiceProvider.data.model.Expert;
-import ir.maktab.HomeServiceProvider.data.repository.CommentRepository;
-import ir.maktab.HomeServiceProvider.validation.PictureValidator;
 import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -23,12 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class CommentServiceImpTest {
     @Autowired
     private CommentServiceImp commentService;
-
-    @Autowired
-    private CommentRepository commentRepository;
-
-    @Autowired
-    private ExpertServiceImpl expertService;
 
     GetImage image = new GetImage();
 
@@ -49,8 +39,8 @@ class CommentServiceImpTest {
     void testSoftDeleteComment() {
         Comment saveComment = commentService.add(comment2);
         commentService.remove(saveComment);
-        Optional<Comment> optionalComment = commentRepository.findById(saveComment.getId());
-        assertThat(optionalComment.get().isDeleted()).isEqualTo(true);
+        Comment optionalComment = commentService.findById(saveComment.getId());
+        assertThat(optionalComment.isDeleted()).isEqualTo(true);
 
     }
 
