@@ -1,4 +1,4 @@
-package ir.maktab.HomeServiceProvider.model.enums;
+package ir.maktab.HomeServiceProvider.data.enums;
 
 public enum AccountType {
     ADMIN,

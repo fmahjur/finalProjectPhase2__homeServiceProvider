@@ -1,8 +1,6 @@
 package ir.maktab.HomeServiceProvider.data.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -16,7 +14,8 @@ public class Comment extends BaseEntity {
     String comment;
     double score;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="expert_id")
     Expert expert;
 
     @Column(columnDefinition = "boolean default false")

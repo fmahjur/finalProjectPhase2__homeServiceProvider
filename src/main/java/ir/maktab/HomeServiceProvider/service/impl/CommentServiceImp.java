@@ -2,6 +2,7 @@ package ir.maktab.HomeServiceProvider.service.impl;
 
 import ir.maktab.HomeServiceProvider.data.model.Comment;
 import ir.maktab.HomeServiceProvider.data.repository.CommentRepository;
+import ir.maktab.HomeServiceProvider.exception.NotFoundException;
 import ir.maktab.HomeServiceProvider.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,12 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public Comment update(Comment comment) {
-        comment.setDeleted(true);
         return commentRepository.save(comment);
+    }
+
+    @Override
+    public Comment findById(Long id) {
+        return commentRepository.findById(id).orElseThrow(()->new NotFoundException("not found"));
     }
 
     @Override

@@ -4,6 +4,7 @@ import ir.maktab.HomeServiceProvider.data.model.Expert;
 import ir.maktab.HomeServiceProvider.data.model.Offer;
 import ir.maktab.HomeServiceProvider.data.model.Orders;
 import ir.maktab.HomeServiceProvider.data.repository.OfferRepository;
+import ir.maktab.HomeServiceProvider.exception.NotFoundException;
 import ir.maktab.HomeServiceProvider.service.OfferService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,11 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public Offer update(Offer offer) {
         return offerRepository.save(offer);
+    }
+
+    @Override
+    public Offer findById(Long id) {
+        return offerRepository.findById(id).orElseThrow(()->new NotFoundException("not found"));
     }
 
     @Override

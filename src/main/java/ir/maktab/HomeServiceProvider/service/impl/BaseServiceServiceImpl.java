@@ -2,6 +2,7 @@ package ir.maktab.HomeServiceProvider.service.impl;
 
 import ir.maktab.HomeServiceProvider.data.model.BaseService;
 import ir.maktab.HomeServiceProvider.data.repository.BaseServiceRepository;
+import ir.maktab.HomeServiceProvider.exception.NotFoundException;
 import ir.maktab.HomeServiceProvider.service.BaseServiceService;
 import ir.maktab.HomeServiceProvider.validation.BaseServiceValidator;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,11 @@ public class BaseServiceServiceImpl implements BaseServiceService {
     @Override
     public BaseService update(BaseService baseService) {
         return baseServiceRepository.save(baseService);
+    }
+
+    @Override
+    public BaseService findById(Long id) {
+        return baseServiceRepository.findById(id).orElseThrow(()->new NotFoundException("not found"));
     }
 
     @Override

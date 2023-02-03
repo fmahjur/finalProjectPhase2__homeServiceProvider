@@ -14,7 +14,9 @@ import lombok.experimental.FieldDefaults;
 @MappedSuperclass
 public abstract class Person extends BaseEntity {
     String firstname;
+
     String lastname;
+
     @Column(unique = true)
     String emailAddress;
 }

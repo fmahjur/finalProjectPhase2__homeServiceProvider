@@ -16,8 +16,12 @@ import java.util.List;
 @Entity
 public class Customer extends Account {
     @OneToMany(mappedBy = "customer")
-    List<Order> orders;
+    List<Orders> orders;
 
     @Column(columnDefinition = "boolean default false")
     boolean isDeleted;
+
+    public Customer(String firstname, String lastname, String emailAddress, String password, Credit credit) {
+        super(firstname, lastname, emailAddress, password, credit);
+    }
 }

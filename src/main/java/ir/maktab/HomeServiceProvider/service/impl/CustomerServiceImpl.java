@@ -47,6 +47,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Customer findById(Long id) {
+        return customerRepository.findById(id).orElseThrow(()->new NotFoundException("not found"));
+    }
+
+    @Override
     public List<Customer> selectAll() {
         return customerRepository.findAll();
     }
@@ -66,11 +71,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void changePassword(Customer customer, String newPassword, String confirmNewPassword) {
+    public Customer changePassword(Customer customer, String newPassword, String confirmNewPassword) {
         PasswordValidator.isValidNewPassword(customer.getPassword(), newPassword, confirmNewPassword);
         PasswordValidator.isValid(newPassword);
         customer.setPassword(newPassword);
-        customerRepository.save(customer);
+        return customerRepository.save(customer);
     }
 
     @Override

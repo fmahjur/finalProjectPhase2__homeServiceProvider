@@ -1,5 +1,6 @@
 package ir.maktab.HomeServiceProvider.data.model;
 
+import ir.maktab.HomeServiceProvider.data.enums.OfferStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -10,7 +11,6 @@ import java.util.Date;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 public class Offer extends BaseEntity {
@@ -18,7 +18,7 @@ public class Offer extends BaseEntity {
     Expert expert;
 
     @ManyToOne
-    Order order;
+    Orders orders;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -26,8 +26,17 @@ public class Offer extends BaseEntity {
 
     Double offerPrice;
 
-    DurationOfWork durationOfWork;
+    @Temporal(TemporalType.TIMESTAMP)
+    Date proposedStartDate;
+
+    int durationOfWork;
+
+    OfferStatus offerStatus;
 
     @Column(columnDefinition = "boolean default false")
     boolean isDeleted;
+
+    public Offer() {
+        this.offerStatus = OfferStatus.WAITING;
+    }
 }

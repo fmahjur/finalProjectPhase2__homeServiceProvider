@@ -5,6 +5,7 @@ import ir.maktab.HomeServiceProvider.data.model.Customer;
 import ir.maktab.HomeServiceProvider.data.model.Offer;
 import ir.maktab.HomeServiceProvider.data.model.Orders;
 import ir.maktab.HomeServiceProvider.data.repository.OrderRepository;
+import ir.maktab.HomeServiceProvider.exception.NotFoundException;
 import ir.maktab.HomeServiceProvider.service.OrderService;
 import ir.maktab.HomeServiceProvider.validation.OfferValidator;
 import ir.maktab.HomeServiceProvider.validation.OrderValidator;
@@ -36,6 +37,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Orders update(Orders orders) {
         return orderRepository.save(orders);
+    }
+
+    @Override
+    public Orders findById(Long id) {
+        return orderRepository.findById(id).orElseThrow(()->new NotFoundException("not found"));
     }
 
     @Override

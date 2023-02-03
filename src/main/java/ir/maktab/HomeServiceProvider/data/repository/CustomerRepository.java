@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
+    boolean existsByEmailAddress(String emailAddress);
     Optional<Customer> findByUsername(String username);
 
     Optional<Customer> findByEmailAddress(String emailAddress);

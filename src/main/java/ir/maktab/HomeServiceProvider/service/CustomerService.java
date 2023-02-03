@@ -5,7 +5,7 @@ import ir.maktab.HomeServiceProvider.data.model.*;
 public interface CustomerService extends MainService<Customer> {
     void login(Customer customer);
 
-    void changePassword(Customer customer, String newPassword, String confirmNewPassword);
+    Customer changePassword(Customer customer, String newPassword, String confirmNewPassword);
 
     void addNewOrder(Orders orders);
 

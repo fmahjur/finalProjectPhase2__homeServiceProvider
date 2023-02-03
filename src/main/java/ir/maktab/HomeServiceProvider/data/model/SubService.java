@@ -1,9 +1,6 @@
 package ir.maktab.HomeServiceProvider.data.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,13 +14,17 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 public class SubService extends BaseEntity implements Service {
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     BaseService baseService;
+
+    @Column(unique = true)
     String name;
+
     String description;
+
     Double basePrice;
 
-    @ManyToMany(mappedBy = "subServices")
+    @ManyToMany(mappedBy = "subServices", targetEntity = Expert.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     Set<Expert> experts = new HashSet<>();
 
     @Column(columnDefinition = "boolean default false")

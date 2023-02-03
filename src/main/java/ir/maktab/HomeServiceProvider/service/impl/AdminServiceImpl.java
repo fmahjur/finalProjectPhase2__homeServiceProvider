@@ -6,21 +6,16 @@ import ir.maktab.HomeServiceProvider.data.model.Expert;
 import ir.maktab.HomeServiceProvider.data.model.SubService;
 import ir.maktab.HomeServiceProvider.service.AdminService;
 import ir.maktab.HomeServiceProvider.validation.ExpertValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
     private final BaseServiceServiceImpl baseServiceService;
     private final SubServiceServiceImpl subServiceService;
     private final ExpertServiceImpl expertService;
     private final CustomerServiceImpl customerService;
-
-    public AdminServiceImpl(BaseServiceServiceImpl baseServiceService, SubServiceServiceImpl subServiceService, ExpertServiceImpl expertService, CustomerServiceImpl customerService) {
-        this.baseServiceService = baseServiceService;
-        this.subServiceService = subServiceService;
-        this.expertService = expertService;
-        this.customerService = customerService;
-    }
 
     @Override
     public BaseService addNewService(BaseService baseService) {
@@ -40,10 +35,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void allocationServiceToExpert(Expert expert, SubService subService) {
-        //ExpertValidator.isExpertConfirmed(expert.getUsername());
-
-        expert.setSubServices(subService);
-        expertService.updateExpertSubService(expert);
+        ExpertValidator.isExpertConfirmed(expert);
+        expertService.updateExpertSubService(subService, expert);
     }
 
     @Override

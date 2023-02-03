@@ -1,8 +1,6 @@
 package ir.maktab.HomeServiceProvider.data.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -16,8 +14,10 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 public class BaseService extends BaseEntity implements Service {
+    @Column(unique = true)
     String name;
-    @OneToMany(mappedBy = "baseService")
+
+    @OneToMany(mappedBy = "baseService", cascade = CascadeType.ALL)
     List<SubService> subServiceList = new ArrayList<>();
 
     @Column(columnDefinition = "boolean default false")

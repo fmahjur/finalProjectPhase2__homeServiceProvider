@@ -9,6 +9,8 @@ public interface MainService<T> {
 
     T update(T t);
 
+    T findById(Long id);
+
     List<T> selectAll();
 
     List<T> selectAllAvailableService();

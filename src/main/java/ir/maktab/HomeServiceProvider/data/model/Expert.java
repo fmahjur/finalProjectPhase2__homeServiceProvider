@@ -8,7 +8,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -24,13 +26,13 @@ public class Expert extends Account {
     @Basic(fetch = FetchType.LAZY)
     byte[] personalPhoto;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = SubService.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     Set<SubService> subServices = new HashSet<>();
 
     double rate;
 
-    @OneToMany(mappedBy = "expert")
-    Set<Comment> comment = new HashSet<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "expert", cascade = {CascadeType.ALL})
+    List<Comment> comments = new ArrayList<>();
 
     @Column(columnDefinition = "boolean default false")
     boolean isDeleted;
@@ -40,15 +42,23 @@ public class Expert extends Account {
     }
 
     public Expert() {
+        this.expertStatus = ExpertStatus.NEW;
         this.rate = 0;
     }
 
-    public void setRate(double rate) {
+    public Expert(String firstname, String lastname, String emailAddress, String password, Credit credit, byte[] personalPhoto) {
+        super(firstname, lastname, emailAddress, password, credit);
+        this.expertStatus = ExpertStatus.NEW;
+        this.rate = 0;
+        this.personalPhoto = personalPhoto;
+    }
+
+    public void setRate() {
         double sum = 0;
-        for (Comment coment :
-                comment) {
-            sum += coment.getScore();
+        for (Comment comment :
+                comments) {
+            sum += comment.getScore();
         }
-        this.rate = sum / comment.size();
+        this.rate = sum / comments.size();
     }
 }

@@ -50,7 +50,7 @@ public class Orders extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     Date workStartDate;
 
-    DurationOfWork durationOfWork;
+    int durationOfWork;
 
     @OneToOne
     Address address;

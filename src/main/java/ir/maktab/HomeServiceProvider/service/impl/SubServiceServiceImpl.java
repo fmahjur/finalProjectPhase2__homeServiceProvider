@@ -3,6 +3,7 @@ package ir.maktab.HomeServiceProvider.service.impl;
 import ir.maktab.HomeServiceProvider.data.model.BaseService;
 import ir.maktab.HomeServiceProvider.data.model.SubService;
 import ir.maktab.HomeServiceProvider.data.repository.SubServiceRepository;
+import ir.maktab.HomeServiceProvider.exception.NotFoundException;
 import ir.maktab.HomeServiceProvider.service.SubServiceService;
 import ir.maktab.HomeServiceProvider.validation.BaseServiceValidator;
 import ir.maktab.HomeServiceProvider.validation.SubServiceValidator;
@@ -32,6 +33,11 @@ public class SubServiceServiceImpl implements SubServiceService {
     @Override
     public SubService update(SubService subService) {
         return subServiceRepository.save(subService);
+    }
+
+    @Override
+    public SubService findById(Long id) {
+        return subServiceRepository.findById(id).orElseThrow(()->new NotFoundException("not found"));
     }
 
     @Override
