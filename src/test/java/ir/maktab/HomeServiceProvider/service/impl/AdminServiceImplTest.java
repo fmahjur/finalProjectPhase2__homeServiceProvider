@@ -95,7 +95,8 @@ class AdminServiceImplTest {
     @Test
     @Order(7)
     void testShowSubServicesByBaseService() {
-        assertThat(subServiceService.getSubServicesByService(baseService2).size()).isEqualTo(1);
+        BaseService baseServiceForFind = baseServiceService.findById(2L);
+        assertThat(subServiceService.getSubServicesByService(baseServiceForFind).size()).isEqualTo(1);
     }
 
     @Test
