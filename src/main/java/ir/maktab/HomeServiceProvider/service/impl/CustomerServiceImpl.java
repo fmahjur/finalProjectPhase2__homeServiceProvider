@@ -111,7 +111,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void changeOrderStatusToStarted(Orders orders) {
-        //OrderValidator.isValidOrderStartDate(orders.getWorkStartDate());
+        OrderValidator.isValidOrderStartDate(orders.getWorkStartDate());
         orders.setOrderStatus(OrderStatus.STARTED);
         orderService.update(orders);
     }

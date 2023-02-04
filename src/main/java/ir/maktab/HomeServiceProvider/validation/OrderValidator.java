@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class OrderValidator {
     public static void isValidOrderStartDate(Date workStartDate) throws ValidationException {
-        if (!workStartDate.before(DateUtil.asDate(LocalDate.now())))
+        if (workStartDate.before(DateUtil.asDate(LocalDate.now())))
             throw new ValidationException("work can not start before now!");
     }
 

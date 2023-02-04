@@ -51,5 +51,6 @@ public class Offer extends BaseEntity {
         this.proposedStartDate = proposedStartDate;
         this.offerDate = DateUtil.asDate(LocalDateTime.now());
         this.offerStatus = OfferStatus.WAITING;
+        this.durationOfWork = durationOfWork;
     }
 }

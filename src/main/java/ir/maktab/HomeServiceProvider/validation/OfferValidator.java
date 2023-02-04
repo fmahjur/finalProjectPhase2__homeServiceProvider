@@ -11,7 +11,7 @@ public class OfferValidator {
     }
 
     public static void hasDurationOfWork(Offer offer){
-        if (offer.getDurationOfWork() == 0) {
+        if (offer.getDurationOfWork() <= 0) {
             throw new IncorrectInformationException("Your offer must include the duration of the work");
         }
     }
