@@ -19,9 +19,7 @@ public interface ExpertRepository extends JpaRepository<Expert, Long> {
 
     Optional<Expert> findByEmailAddress(String emailAddress);
 
-    @Modifying
-    @Query("select e from Expert e where e.isDeleted=false and e.expertStatus=?1")
-    List<Expert> findAllByExpertStatus(@Param("expertStatus") ExpertStatus expertStatus);
+    List<Expert> findAllByExpertStatus(ExpertStatus expertStatus);
 
     @Modifying
     @Query("select e from Expert e where e.isDeleted=?1")

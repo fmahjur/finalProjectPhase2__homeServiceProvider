@@ -19,4 +19,6 @@ public interface OrderRepository extends JpaRepository<Orders, Long> {
 
     @Query("select o from Orders o where o.isDeleted=?1")
     List<Orders> findAllByDeletedIs(@Param("is_deleted") boolean isDeleted);
+
+    List<Orders> findAllByIsDeletedFalse();
 }

@@ -13,12 +13,14 @@ import ir.maktab.HomeServiceProvider.validation.OrderValidator;
 import ir.maktab.HomeServiceProvider.validation.PasswordValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final OrderServiceImpl orderService;
@@ -109,7 +111,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void changeOrderStatusToStarted(Orders orders) {
-        OrderValidator.isValidOrderStartDate(orders.getWorkStartDate());
+        //OrderValidator.isValidOrderStartDate(orders.getWorkStartDate());
         orders.setOrderStatus(OrderStatus.STARTED);
         orderService.update(orders);
     }

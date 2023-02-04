@@ -9,11 +9,13 @@ import ir.maktab.HomeServiceProvider.validation.BaseServiceValidator;
 import ir.maktab.HomeServiceProvider.validation.SubServiceValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class SubServiceServiceImpl implements SubServiceService {
     private final SubServiceRepository subServiceRepository;
 

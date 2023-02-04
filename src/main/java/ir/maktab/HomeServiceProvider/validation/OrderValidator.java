@@ -1,5 +1,6 @@
 package ir.maktab.HomeServiceProvider.validation;
 
+import ir.maktab.HomeServiceProvider.Utils.DateUtil;
 import ir.maktab.HomeServiceProvider.data.enums.OrderStatus;
 import ir.maktab.HomeServiceProvider.data.model.Orders;
 import ir.maktab.HomeServiceProvider.exception.ValidationException;
@@ -10,7 +11,7 @@ import java.util.Date;
 
 public class OrderValidator {
     public static void isValidOrderStartDate(Date workStartDate) throws ValidationException {
-        if (!workStartDate.before(Date.from(Instant.from(LocalDate.now()))))
+        if (!workStartDate.before(DateUtil.asDate(LocalDate.now())))
             throw new ValidationException("work can not start before now!");
     }
 

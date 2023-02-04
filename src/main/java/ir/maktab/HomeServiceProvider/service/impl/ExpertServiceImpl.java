@@ -13,6 +13,7 @@ import ir.maktab.HomeServiceProvider.validation.PasswordValidator;
 import ir.maktab.HomeServiceProvider.validation.PictureValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ExpertServiceImpl implements ExpertService {
     private final ExpertRepository expertRepository;
     private final OrderServiceImpl orderService;

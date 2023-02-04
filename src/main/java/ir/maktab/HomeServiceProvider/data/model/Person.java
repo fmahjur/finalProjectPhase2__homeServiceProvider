@@ -19,4 +19,11 @@ public abstract class Person extends BaseEntity {
 
     @Column(unique = true)
     String emailAddress;
+
+    public Person(Long id, String firstname, String lastname, String emailAddress) {
+        super(id);
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.emailAddress = emailAddress;
+    }
 }

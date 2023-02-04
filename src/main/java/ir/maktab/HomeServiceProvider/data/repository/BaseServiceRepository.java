@@ -15,4 +15,6 @@ public interface BaseServiceRepository extends JpaRepository<BaseService, Long> 
 
     @Query("select b from BaseService b where b.isDeleted=?1")
     List<BaseService> findAllByDeletedIs(@Param("is_deleted") boolean isDeleted);
+
+    List<BaseService> findAllByIsDeletedFalse();
 }

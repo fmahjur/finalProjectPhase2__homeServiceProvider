@@ -27,14 +27,13 @@ public class Expert extends Account {
     byte[] personalPhoto;
 
     @ManyToMany(fetch = FetchType.EAGER, targetEntity = SubService.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    Set<SubService> subServices = new HashSet<>();
+    List<SubService> subServices = new ArrayList<>();
 
     double rate;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "expert", cascade = {CascadeType.ALL})
     List<Comment> comments = new ArrayList<>();
 
-    @Column(columnDefinition = "boolean default false")
     boolean isDeleted;
 
     public void setSubServices(SubService subServices) {
@@ -44,6 +43,15 @@ public class Expert extends Account {
     public Expert() {
         this.expertStatus = ExpertStatus.NEW;
         this.rate = 0;
+        this.isDeleted = false;
+    }
+
+    public Expert(Long id, String firstname, String lastname, String emailAddress, String password, Credit credit, byte[] personalPhoto) {
+        super(id, firstname, lastname, emailAddress, password, credit);
+        this.expertStatus = ExpertStatus.NEW;
+        this.rate = 0;
+        this.personalPhoto = personalPhoto;
+        this.isDeleted = false;
     }
 
     public Expert(String firstname, String lastname, String emailAddress, String password, Credit credit, byte[] personalPhoto) {
@@ -51,6 +59,7 @@ public class Expert extends Account {
         this.expertStatus = ExpertStatus.NEW;
         this.rate = 0;
         this.personalPhoto = personalPhoto;
+        this.isDeleted = false;
     }
 
     public void setRate() {

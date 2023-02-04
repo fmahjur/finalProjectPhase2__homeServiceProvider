@@ -23,7 +23,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Orders add(Orders orders) {
-        OrderValidator.isValidOrderStartDate(orders.getWorkStartDate());
+        //OrderValidator.isValidOrderStartDate(orders.getWorkStartDate());
         OrderValidator.isValidCustomerProposedPrice(orders);
         return orderRepository.save(orders);
     }
@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
     public void receivedNewOffer(Offer offer, Orders orders) {
         OrderValidator.checkOrderStatus(orders);
         OfferValidator.isValidExpertProposedPrice(offer);
-        OfferValidator.hasDurationOfWork(offer);
+        //OfferValidator.hasDurationOfWork(offer);
         offer.setOrders(orders);
         orders.getOffers().add(offer);
         orders.setOrderStatus(OrderStatus.WAITING_FOR_CHOSE_EXPERT);
@@ -63,7 +63,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Orders> selectAllAvailableService() {
-        return orderRepository.findAllByDeletedIs(false);
+        return orderRepository.findAllByIsDeletedFalse();
     }
 
     @Override

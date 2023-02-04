@@ -18,6 +18,20 @@ public class Comment extends BaseEntity {
     @JoinColumn(name="expert_id")
     Expert expert;
 
-    @Column(columnDefinition = "boolean default false")
     boolean isDeleted;
+
+    public Comment(Long id, String comment, double score, Expert expert) {
+        super(id);
+        this.comment = comment;
+        this.score = score;
+        this.expert = expert;
+        this.isDeleted = false;
+    }
+
+    public Comment(Long id, String comment, double score) {
+        super(id);
+        this.comment = comment;
+        this.score = score;
+        this.isDeleted = false;
+    }
 }

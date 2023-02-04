@@ -6,11 +6,13 @@ import ir.maktab.HomeServiceProvider.exception.NotFoundException;
 import ir.maktab.HomeServiceProvider.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CommentServiceImp implements CommentService {
     private final CommentRepository commentRepository;
 

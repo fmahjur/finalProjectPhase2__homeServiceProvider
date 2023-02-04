@@ -10,7 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 public class BaseService extends BaseEntity implements Service {
@@ -20,11 +19,20 @@ public class BaseService extends BaseEntity implements Service {
     @OneToMany(mappedBy = "baseService", cascade = CascadeType.ALL)
     List<SubService> subServiceList = new ArrayList<>();
 
-    @Column(columnDefinition = "boolean default false")
     boolean isDeleted;
 
+    public BaseService() {
+        this.isDeleted = false;
+    }
+
+    public BaseService(Long id, String name) {
+        super(id);
+        this.name = name;
+        this.isDeleted = false;
+    }
     public BaseService(String name) {
         this.name = name;
+        this.isDeleted = false;
     }
 
     public void addSubService(SubService subService) {

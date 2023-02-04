@@ -12,4 +12,9 @@ import lombok.experimental.FieldDefaults;
 @Entity
 public class Credit extends BaseEntity {
     Long balance;
+
+    public Credit(Long id, Long balance) {
+        super(id);
+        this.balance = balance;
+    }
 }

@@ -1,5 +1,6 @@
 package ir.maktab.HomeServiceProvider.data.model;
 
+import ir.maktab.HomeServiceProvider.Utils.DateUtil;
 import ir.maktab.HomeServiceProvider.data.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -9,7 +10,10 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -26,7 +30,7 @@ public class Orders extends BaseEntity {
     SubService subService;
 
     @OneToMany(mappedBy = "orders")
-    Set<Offer> offers;
+    List<Offer> offers = new ArrayList<>();
 
     @Column(nullable = false)
     String description;
@@ -40,7 +44,6 @@ public class Orders extends BaseEntity {
     @OneToOne
     Comment comment;
 
-    @Column(columnDefinition = "boolean default false")
     boolean isDeleted;
 
     @CreationTimestamp
@@ -52,10 +55,39 @@ public class Orders extends BaseEntity {
 
     int durationOfWork;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     Address address;
 
     public Orders() {
         this.orderStatus = OrderStatus.WAITING_FOR_EXPERTS_OFFER;
+        this.isDeleted = false;
+    }
+
+    public Orders(Long id, String orderNumber, Customer customer, SubService subService, String description, Long customerProposedPrice, Date workStartDate, int durationOfWork, Address address) {
+        super(id);
+        this.orderNumber = orderNumber;
+        this.customer = customer;
+        this.subService = subService;
+        this.description = description;
+        this.CustomerProposedPrice = customerProposedPrice;
+        this.orderRegistrationDate = DateUtil.asDate(LocalDateTime.now());
+        this.workStartDate = workStartDate;
+        this.durationOfWork = durationOfWork;
+        this.address = address;
+        this.orderStatus = OrderStatus.WAITING_FOR_EXPERTS_OFFER;
+        this.isDeleted = false;
+    }
+    public Orders(String orderNumber, Customer customer, SubService subService, String description, Long customerProposedPrice, Date workStartDate, int durationOfWork, Address address) {
+        this.orderNumber = orderNumber;
+        this.customer = customer;
+        this.subService = subService;
+        this.description = description;
+        this.CustomerProposedPrice = customerProposedPrice;
+        this.orderRegistrationDate = DateUtil.asDate(LocalDateTime.now());
+        this.workStartDate = workStartDate;
+        this.durationOfWork = durationOfWork;
+        this.address = address;
+        this.orderStatus = OrderStatus.WAITING_FOR_EXPERTS_OFFER;
+        this.isDeleted = false;
     }
 }

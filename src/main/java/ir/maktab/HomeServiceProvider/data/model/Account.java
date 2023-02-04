@@ -33,6 +33,13 @@ public abstract class Account extends Person {
         this.username = emailAddress;
     }
 
+    public Account(Long id, String firstname, String lastname, String emailAddress, String password, Credit credit) {
+        super(id, firstname, lastname, emailAddress);
+        this.username = emailAddress;
+        this.password = password;
+        this.credit = credit;
+        this.registeryDate = DateUtil.asDate(LocalDateTime.now());
+    }
     public Account(String firstname, String lastname, String emailAddress, String password, Credit credit) {
         super(firstname, lastname, emailAddress);
         this.username = emailAddress;

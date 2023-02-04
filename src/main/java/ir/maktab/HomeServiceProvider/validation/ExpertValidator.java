@@ -36,9 +36,7 @@ public class ExpertValidator {
     }
 
     public static void hasASubService(Expert expert, SubService subService) {
-        for (SubService s : expert.getSubServices())
-            if (s.equals(subService))
-                return;
-        throw new ValidationException("this Expert does not have this subService!");
+        expertRepository.findById(expert.getId());
+        //throw new ValidationException("this Expert does not have this subService!");
     }
 }

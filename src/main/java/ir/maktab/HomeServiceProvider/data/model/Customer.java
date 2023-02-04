@@ -6,22 +6,31 @@ import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 public class Customer extends Account {
     @OneToMany(mappedBy = "customer")
-    List<Orders> orders;
+    List<Orders> orders = new ArrayList<>();
 
-    @Column(columnDefinition = "boolean default false")
     boolean isDeleted;
+
+    public Customer() {
+        this.isDeleted = false;
+    }
+
+    public Customer(Long id, String firstname, String lastname, String emailAddress, String password, Credit credit) {
+        super(id, firstname, lastname, emailAddress, password, credit);
+        this.isDeleted = false;
+    }
 
     public Customer(String firstname, String lastname, String emailAddress, String password, Credit credit) {
         super(firstname, lastname, emailAddress, password, credit);
+        this.isDeleted = false;
     }
 }

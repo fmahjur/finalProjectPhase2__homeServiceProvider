@@ -1,5 +1,6 @@
 package ir.maktab.HomeServiceProvider.service.impl;
 
+import ir.maktab.HomeServiceProvider.data.enums.OrderStatus;
 import ir.maktab.HomeServiceProvider.data.model.Expert;
 import ir.maktab.HomeServiceProvider.data.model.Offer;
 import ir.maktab.HomeServiceProvider.data.model.Orders;
@@ -54,8 +55,8 @@ public class OfferServiceImpl implements OfferService {
         List<Offer> allOfferForOrder = offerRepository.findAllByOrdersIs(orders);
         Collections.sort(allOfferForOrder, new Comparator() {
             public int compare(Object o1, Object o2) {
-                Double x1 = ((Offer) o1).getOfferPrice();
-                Double x2 = ((Offer) o2).getOfferPrice();
+                Long x1 = ((Offer) o1).getOfferPrice();
+                Long x2 = ((Offer) o2).getOfferPrice();
                 int compare = x1.compareTo(x2);
                 if (compare != 0) {
                     return compare;
