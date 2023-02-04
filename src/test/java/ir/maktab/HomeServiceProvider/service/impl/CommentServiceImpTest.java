@@ -22,12 +22,12 @@ class CommentServiceImpTest {
 
     GetImage image = new GetImage();
 
-    Expert expert = new Expert("reihan", "mahjour", "kaveh@gmail.com", "Rm@123456", new Credit(1000L), image.getImage());
-    Expert expert1 = new Expert("hamid", "mahjour", "mohammad@gmail.com", "Hm@123456", new Credit(1000L), image.getImage());
-    Expert expert2 = new Expert("hamid", "mahjour", "ali@gmail.com", "Am@123456", new Credit(1000L), image.getImage());
-    Comment comment = new Comment("Comment", 5.0, expert, false);
-    Comment comment1 = new Comment("Comment1", 4.0, expert1, false);
-    Comment comment2 = new Comment("Comment2", 3.0, expert2, false);
+    Expert expert = new Expert(4L, "reihan", "mahjour", "kaveh@gmail.com", "Rm@123456", new Credit(1000L), image.getImage());
+    Expert expert1 = new Expert(5L, "hamid", "mahjour", "mohammad@gmail.com", "Hm@123456", new Credit(1000L), image.getImage());
+    Expert expert2 = new Expert(6L, "hamid", "mahjour", "ali@gmail.com", "Am@123456", new Credit(1000L), image.getImage());
+    Comment comment = new Comment(4L, "Comment", 5.0, expert);
+    Comment comment1 = new Comment(5L, "Comment1", 4.0, expert1);
+    Comment comment2 = new Comment(6L, "Comment2", 3.0, expert2);
 
     @Test
     void addNewCommentTest() {
