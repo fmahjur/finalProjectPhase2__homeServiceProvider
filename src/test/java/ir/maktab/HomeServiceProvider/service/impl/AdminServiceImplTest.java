@@ -107,7 +107,7 @@ class AdminServiceImplTest {
     }
 
     @Test
-    void yesyShowAllExpert() {
+    void testShowAllExpert() {
         List<Expert> expertList = expertService.selectAll();
         assertThat(expertList).isNotNull();
         assertThat(expertList.size()).isEqualTo(1);
