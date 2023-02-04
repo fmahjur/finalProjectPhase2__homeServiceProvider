@@ -68,10 +68,10 @@ class BaseServiceServiceTest {
     }
 
     protected BaseService getBaseService() {
-        return new BaseService("service1");
+        return new BaseService(4L, "service4");
     }
 
     protected BaseService getBaseService2() {
-        return new BaseService("service2");
+        return new BaseService(5L, "service5");
     }
 }
