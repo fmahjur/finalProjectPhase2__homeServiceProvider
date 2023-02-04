@@ -6,15 +6,13 @@ import ir.maktab.HomeServiceProvider.data.enums.OrderStatus;
 import ir.maktab.HomeServiceProvider.data.model.*;
 import ir.maktab.HomeServiceProvider.data.repository.AddressRepository;
 import ir.maktab.HomeServiceProvider.exception.ValidationException;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 
