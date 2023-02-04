@@ -29,7 +29,7 @@ public class SubService extends BaseEntity implements Service {
         this.isDeleted = false;
     }
 
-    @ManyToMany(mappedBy = "subServices", targetEntity = Expert.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "subServices", targetEntity = Expert.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE, })
     List<Expert> experts = new ArrayList<>();
 
     boolean isDeleted;

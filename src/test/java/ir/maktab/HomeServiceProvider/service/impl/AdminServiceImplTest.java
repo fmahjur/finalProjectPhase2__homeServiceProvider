@@ -72,7 +72,7 @@ class AdminServiceImplTest {
         baseServiceService.add(baseService1);
         subServiceService.add(subService1);
         Expert findExpert = expertService.findById(1L);
-        SubService subService = subServiceService.findById(1L);
+        SubService subService = subServiceService.findById(2L);
         adminService.allocationServiceToExpert(findExpert, subService);
         assertThat(expertService.findById(1L).getSubServices().size()).isEqualTo(1);
     }
@@ -81,7 +81,7 @@ class AdminServiceImplTest {
     @Order(5)
     void testRemoveExpertFromService() {
         Expert findExpert = expertService.findById(1L);
-        SubService subService = subServiceService.findById(1L);
+        SubService subService = subServiceService.findById(2L);
         adminService.removeExpertFromService(findExpert, subService);
         assertThat(expertService.findById(1L).getSubServices().size()).isEqualTo(0);
     }

@@ -158,7 +158,7 @@ class ExpertServiceImplTest {
     @Test
     void testGetPersonalPhoto() throws IOException {
         byte[] personalPhoto = expertService.getImage(1L);
-        FileOutputStream image = new FileOutputStream("C:\\Users\\paage\\OneDrive\\Documents\\reihaneh\\2222.jpg");
+        FileOutputStream image = new FileOutputStream("C:\\Users\\paage\\OneDrive\\Documents\\reihaneh\\3333.jpg");
         image.write(personalPhoto);
     }
 }

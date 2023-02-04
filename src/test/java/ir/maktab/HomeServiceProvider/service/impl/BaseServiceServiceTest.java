@@ -44,19 +44,20 @@ class BaseServiceServiceTest {
     void testSoftDeleteBaseService() {
         BaseService baseService = getBaseService2();
         baseServiceService.remove(baseService);
-        Optional<BaseService> optionalBaseService = baseServiceRepository.findById(baseService.getId());
+        BaseService saveBaseService = baseServiceService.add(baseService);
+        Optional<BaseService> optionalBaseService = baseServiceRepository.findById(saveBaseService.getId());
         assertThat(optionalBaseService.get().isDeleted()).isEqualTo(true);
     }
 
     @Test
+    @Order(3)
     void testUpdateBaseService() {
-        BaseService baseService = getBaseService2();
-        BaseService saveBaseService = baseServiceService.add(baseService);
+        BaseService baseService = baseServiceService.findById(1L);
 
-        saveBaseService.setName("baseService6");
+        baseService.setName("baseService7");
         BaseService updateBaseService = baseServiceService.update(baseService);
 
-        assertThat(updateBaseService.getName()).isEqualTo("baseService6");
+        assertThat(updateBaseService.getName()).isEqualTo("baseService7");
     }
 
     @Test
@@ -68,10 +69,10 @@ class BaseServiceServiceTest {
     }
 
     protected BaseService getBaseService() {
-        return new BaseService(4L, "service4");
+        return new BaseService("service4");
     }
 
     protected BaseService getBaseService2() {
-        return new BaseService(5L, "service5");
+        return new BaseService("service5");
     }
 }
